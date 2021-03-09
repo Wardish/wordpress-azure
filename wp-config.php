@@ -13,7 +13,7 @@
  * * Database table prefix
  * * ABSPATH
  *
- * @link https://codex.wordpress.org/Editing_wp-config.php
+ * @link https://wordpress.org/support/article/editing-wp-config-php/
  *
  * @package WordPress
  */
@@ -64,24 +64,14 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
-define('AUTH_KEY',         'put your unique phrase here');
-define('SECURE_AUTH_KEY',  'put your unique phrase here');
-define('LOGGED_IN_KEY',    'put your unique phrase here');
-define('NONCE_KEY',        'put your unique phrase here');
-define('AUTH_SALT',        'put your unique phrase here');
-define('SECURE_AUTH_SALT', 'put your unique phrase here');
-define('LOGGED_IN_SALT',   'put your unique phrase here');
-define('NONCE_SALT',       'put your unique phrase here');
-
-
-/* Security for Wordpress : 
-you may wish to disable the plugin or theme editor to prevent overzealous users from being able to edit sensitive files and 
-potentially crash the site. Disabling these also provides an additional layer of security if a hacker gains access to a 
-well-privileged user account.
-Note : If your plugin or theme you use with your app requires editing of the files , comment the line below for 'DISALLOW_FILE_EDIT'
-*/
-define('DISALLOW_FILE_EDIT', true);
-
+define( 'AUTH_KEY',         'a754f138a60e24cb5fc58c91c6e73dda3be1a263');
+define( 'SECURE_AUTH_KEY',  '1ede8995090d6f0ba9479b38d96d4df37e3e2ce5');
+define( 'LOGGED_IN_KEY',    'e3e4be3f90e71c2161d0d7efb3dd0c2b472a4050');
+define( 'NONCE_KEY',        '5ba1b973c7587e92c192a21ac445a09e8a9e2235');
+define( 'AUTH_SALT',        '4fbeeaf3b5b73686e078150a053350c576eefb5e');
+define( 'SECURE_AUTH_SALT', '31ff804f221e704bf623b504fbc0b4023ce2b088');
+define( 'LOGGED_IN_SALT',   'ded73d75e6e18d3c15214c8a0814796b97ce6e80');
+define( 'NONCE_SALT',       'c7ba053618a66fd38443a3e68e4174ef1cc22422');
 
 /**#@-*/
 
@@ -91,7 +81,7 @@ define('DISALLOW_FILE_EDIT', true);
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix  = 'wp_';
+$table_prefix = 'wp_';
 
 /**
  * For developers: WordPress debugging mode.
@@ -101,13 +91,19 @@ $table_prefix  = 'wp_';
  * in their development environments.
  *
  * For information on other constants that can be used for debugging,
- * visit the Codex.
+ * visit the documentation.
  *
- * @link https://codex.wordpress.org/Debugging_in_WordPress
+ * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
-define('WP_DEBUG', false);
+define( 'WP_DEBUG', false );
 
-/* That's all, stop editing! Happy blogging. */
+// If we're behind a proxy server and using HTTPS, we need to alert WordPress of that fact
+// see also http://codex.wordpress.org/Administration_Over_SSL#Using_a_Reverse_Proxy
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+	$_SERVER['HTTPS'] = 'on';
+}
+
+/* That's all, stop editing! Happy publishing. */
 
 //Relative URLs for swapping across app service deployment slots 
 define('WP_HOME', 'http://'. filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_STRING));
@@ -115,10 +111,10 @@ define('WP_SITEURL', 'http://'. filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_S
 define('WP_CONTENT_URL', '/wp-content');
 define('DOMAIN_CURRENT_SITE', filter_input(INPUT_SERVER, 'HTTP_HOST', FILTER_SANITIZE_STRING));
 
-
 /** Absolute path to the WordPress directory. */
-if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+if ( ! defined( 'ABSPATH' ) ) {
+	define( 'ABSPATH', __DIR__ . '/' );
+}
 
 /** Sets up WordPress vars and included files. */
-require_once(ABSPATH . 'wp-settings.php');
+require_once ABSPATH . 'wp-settings.php';
